@@ -53,10 +53,16 @@ class Customer {
             System.out.println(key + ": " + gender_counts.get(key));
         }
     }
+    void AvailableGenders(){
+        for (Gender gender : Gender.values()) {
+            System.out.println(gender);
+        }
+    }
     public static void main(String args[]){
         Customer customer = new Customer("Harsh", "9575594938","MALE");
         Customer customer2 = new Customer("Sajal", "9575594938","FEMALE");
         Customer customer3 = new Customer("Harsh", "9575594938","MALE");
         customer.getGenderCounts();
+        customer.AvailableGenders();
     }
 }
