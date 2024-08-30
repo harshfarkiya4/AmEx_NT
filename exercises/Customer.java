@@ -1,13 +1,8 @@
 package exercises;
 import java.util.HashMap;
-
+import java.util.Arrays;
+// import Gender;
 class Customer {
-    enum Gender {
-        MALE,
-        FEMALE,
-        OTHERS
-    }
-
     String customerName = "";
     String phoneNumber = "";
     Gender gender;
@@ -18,50 +13,27 @@ class Customer {
         gender_counts.put(Gender.FEMALE, 0);
         gender_counts.put(Gender.OTHERS, 0);
     }
-    Customer(String customerName, String phoneNumber, String gender) {
+    Customer(String customerName, String phoneNumber, Gender gender) {
         this.customerName = customerName;
         this.phoneNumber = phoneNumber;
-        if(gender.toLowerCase().equals("male")){
-            this.gender = Gender.MALE;
-            // Update the gender count
-            Integer prevCount = gender_counts.get(Gender.MALE);
-            if (prevCount == null) {
-                prevCount = 0;
-            }
-            gender_counts.put(Gender.MALE, prevCount + 1);
+        Integer prevCount = gender_counts.get(gender);
+        if (prevCount == null) {
+            prevCount = 0;
         }
-        else if(gender.toLowerCase().equals("female")){
-            this.gender = Gender.FEMALE;
-            // Update the gender count
-            Integer prevCount = gender_counts.get(Gender.FEMALE);
-            if (prevCount == null) {
-                prevCount = 0;
-            }
-            gender_counts.put(Gender.FEMALE, prevCount + 1);
-        }
-        else{
-            Integer prevCount = gender_counts.get(Gender.OTHERS);
-            if (prevCount == null) {
-                prevCount = 0;
-            }
-            gender_counts.put(Gender.OTHERS, prevCount + 1);
-        }
-        
+        gender_counts.put(gender, prevCount + 1);
+        this.gender = gender;        
     }
     void getGenderCounts(){
-        for (Gender key : gender_counts.keySet()) {
-            System.out.println(key + ": " + gender_counts.get(key));
-        }
+        gender_counts.entrySet().stream().forEach(entry -> System.out.println(entry.getKey() +" : "+ entry.getValue()));
     }
     void AvailableGenders(){
-        for (Gender gender : Gender.values()) {
-            System.out.println(gender);
-        }
+        Arrays.stream(Gender.values()).forEach(System.out::println);
     }
     public static void main(String args[]){
-        Customer customer = new Customer("Harsh", "9575594938","MALE");
-        Customer customer2 = new Customer("Sajal", "9575594938","FEMALE");
-        Customer customer3 = new Customer("Harsh", "9575594938","MALE");
+        Customer customer = new Customer("Harsh", "9575594938",Gender.MALE);
+        Customer customer2 = new Customer("Sajal", "9575594938",Gender.FEMALE);
+        Customer customer3 = new Customer("Harsh", "9575594938",Gender.MALE);
+        Customer customer4 = new Customer("Harsh", "9575594938",Gender.OTHERS);
         customer.getGenderCounts();
         customer.AvailableGenders();
     }
